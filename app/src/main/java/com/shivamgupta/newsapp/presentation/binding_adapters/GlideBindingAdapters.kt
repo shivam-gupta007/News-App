@@ -1,7 +1,6 @@
 package com.shivamgupta.newsapp.presentation.binding_adapters
 
 import android.widget.ImageView
-import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.google.android.material.imageview.ShapeableImageView
@@ -22,11 +21,10 @@ fun bindImageUrl(imageView: ShapeableImageView, url: String?){
     }
 }
 
-@BindingAdapter("imageUrl")
-fun bindImageUrl(imageView: ImageView, url: String?){
+@BindingAdapter("newsHeaderImageUrl")
+fun bindNewsHeaderImage(imageView: ImageView, url: String?){
     if(url.isNullOrEmpty()) {
-        val color = imageView.getColorResById(R.color.blank_header_image_bg_color)
-
+        val color = imageView.getColorResById(R.color.md_theme_light_primary)
         imageView.setBackgroundColor(color)
     } else {
         Glide.with(imageView)

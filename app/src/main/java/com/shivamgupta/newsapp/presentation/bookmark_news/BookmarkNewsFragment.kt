@@ -80,6 +80,7 @@ class BookmarkNewsFragment : Fragment() {
     private fun setupNewsRecyclerView(news: List<News>) {
         binding.bookmarkedNewsRecyclerView.adapter = NewsRecyclerViewAdapter(
             news = news,
+            emptyNewsMessage = getString(R.string.empty_bookmark_news_msg),
             onNewsClicked = { clickedNews ->
                 findNavController().navigate(
                     BookmarkNewsFragmentDirections.openNewsDetailScreenFromBookmarkNewsScreen(

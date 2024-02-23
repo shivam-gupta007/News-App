@@ -22,6 +22,8 @@
     <string name="sample_published_at_date">20 July 2023</string>
     <string name="sample_author_name">By Matt Burgess</string>
     <string name="content_desc_search_icon">search icon</string>
+    <string name="no_news_found">No news found</string>
+    <string name="empty_bookmark_news_msg">All your bookmarked news will be shown here.</string>
 
 
 </resources>

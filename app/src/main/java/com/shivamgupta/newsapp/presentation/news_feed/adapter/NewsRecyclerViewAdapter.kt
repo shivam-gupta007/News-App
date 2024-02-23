@@ -12,6 +12,7 @@ import com.shivamgupta.newsapp.domain.models.News
 
 class NewsRecyclerViewAdapter(
     private val news: List<News>,
+    private val emptyNewsMessage: String,
     private val onNewsClicked: (News) -> Unit
 ) : RecyclerView.Adapter<ViewHolder>() {
 
@@ -85,7 +86,7 @@ class NewsRecyclerViewAdapter(
                 holder.bind(news[position])
             }
             is NoDataViewHolder -> {
-                holder.bind(messageText = "No news found")
+                holder.bind(messageText = emptyNewsMessage)
             }
         }
     }

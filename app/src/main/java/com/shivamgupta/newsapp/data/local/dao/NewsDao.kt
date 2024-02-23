@@ -20,8 +20,12 @@ interface NewsDao {
     @Transaction
     suspend fun deleteAndInsertNews(news: List<NewsEntity>){
         deleteAllNews()
+        resetPrimaryKey()
         insertOrIgnoreBunchOfNews(news)
     }
+
+    @Query("DELETE FROM sqlite_sequence WHERE name='news_table'")
+    suspend fun resetPrimaryKey()
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertOrIgnoreBunchOfNews(news: List<NewsEntity>)

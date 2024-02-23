@@ -21,7 +21,7 @@
             android:layout_height="200dp"
             android:contentDescription="@string/content_description_news_header_image"
             android:scaleType="centerCrop"
-            app:imageUrl="@{newsDetailItem.headerImageUrl}"
+            app:newsHeaderImageUrl="@{newsDetailItem.headerImageUrl}"
             tools:src="@drawable/layout_news_img_placeholder" />
 
         <LinearLayout
