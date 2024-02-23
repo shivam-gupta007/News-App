@@ -1,6 +1,6 @@
 # News app
 
-![News app screens](https://github.com/shivam-gupta007/News-App/assets/83108424/c921123f-9a52-4a50-a39f-2484691f7a64)
+![News app screens](https://github.com/shivam-gupta007/News-App/assets/83108424/5fda8794-3d7a-46d2-96bb-ec97e06900a7)
 
 ### Click here to download [Latest APK](https://drive.google.com/file/d/10gtLxFmivuzEUYd-wXpNKSWgOAfD4J1P/view?usp=sharing) 
 
