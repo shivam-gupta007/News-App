@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">News App</string>
+    <string name="socket_timeout_error_msg">Request timed out. Please check your connection and try again.</string>
+    <string name="io_exception_error_msg">No internet connection. Please connect to the internet and try again.</string>
+    <string name="http_exception_error_msg">An error occurred. Please try again later.</string>
+    <string name="something_went_wrong_error">Something went wrong. Please try again.</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="label_view_full_article">View full article</string>
+    <string name="content_description_news_header_image">News header image</string>
+    <string name="title_home">Home</string>
+    <string name="title_bookmarks">Bookmarks</string>
+    <string name="header_title_saved_news">Saved news</string>
+    <string name="news_sharing_message">Check out this interesting news article:\n\n%s\n\n%s</string>
+    <string name="share_news">Share news</string>
+    <string name="news_bookmark_status">News %s</string>
+    <string name="news_updated_message">News updated</string>
+    <string name="no_matching_news_found_message">No matching news found for \'%1$s\'</string>
+    <string name="empty_search_text_message">Please enter some keyword to search news</string>
+
+
 </resources>

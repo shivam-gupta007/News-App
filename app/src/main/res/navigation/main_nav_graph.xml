@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph.xml"
+    app:startDestination="@id/newsFeedFragment">
+
+    <fragment
+        android:id="@+id/newsFeedFragment"
+        tools:layout="@layout/fragment_news_feed"
+        android:name="com.shivamgupta.newsapp.presentation.news_feed.NewsFeedFragment"
+        android:label="News Feed" >
+        <action
+            android:id="@+id/open_news_detail_screen_from_news_feed_screen"
+            app:destination="@id/newsDetailFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/newsDetailFragment"
+        android:name="com.shivamgupta.newsapp.presentation.news_detail.NewsDetailFragment"
+        tools:layout="@layout/fragment_news_detail"
+        android:label="News Details">
+
+        <argument
+            android:name="newsItem"
+            app:argType="com.shivamgupta.newsapp.domain.models.News" />
+
+        <argument
+            android:name="navigatedFromSearchNewsScreen"
+            android:defaultValue="false"
+            app:argType="boolean" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/newsSearchFragment"
+        tools:layout="@layout/fragment_news_search"
+        android:name="com.shivamgupta.newsapp.presentation.search_news.NewsSearchFragment"
+        android:label="Search news" >
+
+        <action
+            android:id="@+id/open_news_detail_screen_from_search_news_screen"
+            app:destination="@id/newsDetailFragment"/>
+
+    </fragment>
+    <fragment
+        android:id="@+id/bookmarkNewsFragment"
+        tools:layout="@layout/fragment_bookmark_news"
+        android:name="com.shivamgupta.newsapp.presentation.bookmark_news.BookmarkNewsFragment"
+        android:label="Saved News" >
+        <action
+            android:id="@+id/open_news_detail_screen_from_bookmark_news_screen"
+            app:destination="@id/newsDetailFragment"/>
+    </fragment>
+</navigation>

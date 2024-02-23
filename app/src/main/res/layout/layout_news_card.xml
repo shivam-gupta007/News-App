@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="newsItem"
+            type="com.shivamgupta.newsapp.domain.models.News" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        style="@style/Widget.Material3.CardView.Outlined"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/margin_8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/padding_16dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:maxLengthToShow="@{20}"
+                    android:textColor="?attr/colorPrimary"
+                    app:textValue="@{newsItem.sourceName}"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                    tools:text="Times of India" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:maxLengthToShow="@{70}"
+                    android:textStyle="bold"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    app:textValue="@{newsItem.title}"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                    tools:text="Apple says the iPhone 15’s battery has double the promised lifespan " />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:textAlignment="textEnd"
+                    app:formatAsDate="@{newsItem.publishedDate}"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                    tools:text="20 Jan 2023" />
+
+            </LinearLayout>
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="@dimen/img_size"
+                android:layout_height="@dimen/img_size"
+                android:layout_marginStart="@dimen/margin_8dp"
+                android:scaleType="centerCrop"
+                app:imageUrl="@{newsItem.headerImageUrl}"
+                tools:src="@drawable/layout_news_img_placeholder"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Medium" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

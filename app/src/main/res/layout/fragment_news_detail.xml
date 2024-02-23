@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="newsDetailItem"
+            type="com.shivamgupta.newsapp.domain.models.News" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".presentation.news_detail.NewsDetailFragment">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:contentDescription="@string/content_description_news_header_image"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{newsDetailItem.headerImageUrl}"
+            tools:src="@drawable/layout_news_img_placeholder" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:text="@{newsDetailItem.sourceName}"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                    android:textStyle="bold"
+                    tools:text="The Times of India" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bookmark_button"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_8dp"
+                    app:backgroundTint="?attr/colorPrimary"
+                    app:icon="@drawable/ic_bookmark"
+                    app:iconTint="?attr/colorOnPrimary"
+                    app:toggleBookmarkIcon="@{newsDetailItem.isBookmarked}"
+                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/share_button"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_8dp"
+                    app:backgroundTint="?attr/colorPrimary"
+                    app:icon="@drawable/ic_share"
+                    app:iconTint="?attr/colorOnPrimary" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_16dp"
+                android:text="@{newsDetailItem.title}"
+                android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                android:textColor="?attr/colorPrimary"
+                tools:text="Apple iOS 17.4: iMessage Gets Post-Quantum Encryption in New Update" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_16dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                    app:formatAsDate="@{newsDetailItem.publishedDate}"
+                    tools:text="20 July 2023" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_8dp"
+                    android:layout_weight="1"
+                    android:text="@{`By ` + newsDetailItem.authorName}"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                    tools:text="By Matt Burgess" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_16dp"
+                android:text="@{newsDetailItem.content}"
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                tools:text="Apple is launching its first post-quantum protections, one of the biggest deployments of the future-resistant encryption technology to date.Billions of medical records, financial transactions, and … [+3273 chars]" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/view_full_article_button"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin_16dp"
+                android:text="@string/label_view_full_article"
+                app:iconGravity="textEnd" />
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>
