@@ -1,9 +1,8 @@
 # News app
 
-![News app screens](https://github.com/shivam-gupta007/News-App/assets/83108424/5fda8794-3d7a-46d2-96bb-ec97e06900a7)
+![News app screens](https://github.com/shivam-gupta007/News-App/assets/83108424/f5bc565e-bbb4-4431-9821-0d4e2081f7fe)
 
 ### Click here to download [Latest APK](https://drive.google.com/file/d/10gtLxFmivuzEUYd-wXpNKSWgOAfD4J1P/view?usp=sharing) 
-
 
 ## Installation
 1. Clone the repository from GitHub.
