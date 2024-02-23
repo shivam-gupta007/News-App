@@ -23,7 +23,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="@dimen/padding_16dp"
-        tools:context=".presentation.search_news.NewsSearchFragment">
+        tools:context=".presentation.search_news.SearchNewsFragment">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/search_news_input_layout"
@@ -38,11 +38,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:imeOptions="actionSearch"
+                android:inputType="text"
                 android:maxLines="2"
-                android:text="@{searchedText}"
-                android:inputType="text"/>
+                android:text="@{searchedText}" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:padding="@dimen/padding_16dp"
+            app:visible="@{isLoading}" />
 
         <TextView
             android:id="@+id/header_text_view"
@@ -50,25 +57,18 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_8dp"
             android:padding="@dimen/padding_8dp"
-            app:visible="@{!isLoading}"
             android:text="@{headerTitleText}"
-            tools:text="Searched News"
-            android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
+            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+            app:visible="@{!isLoading}"
+            tools:text="Searched News" />
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipe_to_refresh_layout"
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/searched_news_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:isRefreshing="@{isLoading}">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/searched_news_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/layout_news_card" />
-
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/layout_news_card" />
 
     </LinearLayout>
 </layout>

@@ -26,7 +26,7 @@ class SearchNewsViewModel @Inject constructor(
 
     private var searchNewsJob: Job? = null
 
-    fun searchNews() {
+    fun findNewsByQuery() {
         searchNewsJob?.cancel()
         searchNewsJob = viewModelScope.launch {
             val searchQuery = _uiState.value.searchedText.orEmpty()

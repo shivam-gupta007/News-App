@@ -3,11 +3,11 @@ package com.shivamgupta.newsapp.presentation.bookmark_news
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.shivamgupta.newsapp.data.local.entities.NewsEntity
+import com.shivamgupta.newsapp.data.local.entities.BookmarkedNewsEntity
 import com.shivamgupta.newsapp.domain.models.News
+import com.shivamgupta.newsapp.domain.models.asBookmarkedNewsEntity
 import com.shivamgupta.newsapp.domain.models.asNews
-import com.shivamgupta.newsapp.domain.models.asNewsEntity
-import com.shivamgupta.newsapp.domain.repository.NewsRepository
+import com.shivamgupta.newsapp.domain.repository.BookmarkNewsRepository
 import com.shivamgupta.newsapp.util.ExceptionUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BookmarkNewsViewModel @Inject constructor(
-    private val repository: NewsRepository,
+    private val repository: BookmarkNewsRepository,
     private val app: Application
 ) : ViewModel() {
 
@@ -27,6 +27,10 @@ class BookmarkNewsViewModel @Inject constructor(
     val uiState get() = _uiState.asStateFlow()
 
     fun getBookmarkedNews() {
+        _uiState.update {
+            it.copy(isLoading = true)
+        }
+
         viewModelScope.launch {
             repository.getBookmarkedNews().catch {
                 _uiState.update { currentUiState ->
@@ -42,7 +46,7 @@ class BookmarkNewsViewModel @Inject constructor(
             }.collect { localNews ->
                 _uiState.update { currentUiState ->
                     currentUiState.copy(
-                        news = localNews.map(NewsEntity::asNews), isLoading = false
+                        news = localNews.map(BookmarkedNewsEntity::asNews), isLoading = false
                     )
                 }
             }
@@ -51,19 +55,13 @@ class BookmarkNewsViewModel @Inject constructor(
 
     fun addNews(news: News){
         viewModelScope.launch {
-            repository.addOrIgnoreNews(news.asNewsEntity())
+            repository.addOrIgnoreNews(news.asBookmarkedNewsEntity())
         }
     }
 
-    fun toggleNewsBookmarkedStatus(
-        newsId: Long,
-        isBookmarked: Boolean
-    ){
+    fun deleteBookmarkedNews(newsId: Long){
        viewModelScope.launch {
-           repository.changeNewsBookmarkStatus(
-               newsId,
-               isBookmarked
-           )
+           repository.deleteNews(newsId)
        }
     }
 

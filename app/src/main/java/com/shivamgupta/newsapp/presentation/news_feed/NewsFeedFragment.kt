@@ -89,7 +89,12 @@ class NewsFeedFragment : Fragment() {
         binding.newsRecyclerView.adapter = NewsRecyclerViewAdapter(
             news = news,
             onNewsClicked = { clickedNews ->
-                findNavController().navigate(NewsFeedFragmentDirections.openNewsDetailScreenFromNewsFeedScreen(clickedNews))
+                findNavController().navigate(
+                    NewsFeedFragmentDirections.openNewsDetailScreenFromNewsFeedScreen(
+                        newsItem = clickedNews,
+                        navigateFromBookmarkedScreen = false
+                    )
+                )
             }
         )
     }

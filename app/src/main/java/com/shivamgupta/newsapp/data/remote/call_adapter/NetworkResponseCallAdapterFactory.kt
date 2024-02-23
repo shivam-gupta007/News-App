@@ -13,13 +13,13 @@ class NetworkResponseCallAdapterFactory private constructor() : CallAdapter.Fact
         annotations: Array<out Annotation>,
         retrofit: Retrofit
     ): CallAdapter<*, *>? {
-        //Check API method return type must be of Call Type
+        //Check API method return type must be of `Call Type`
         val rawType: Type = getRawType(returnType)
         if(rawType != Call::class.java){
             return null
         }
 
-        //Check call type must be of NetworkResponse type
+        //Check call type must be of `NetworkResponse` type
         val callType: Type = getParameterUpperBound(0,returnType as ParameterizedType)
         if(getRawType(callType) != NetworkResponse::class.java){
             return null

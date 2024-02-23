@@ -27,4 +27,8 @@ object DatabaseModule {
     @Singleton
     @Provides
     fun providesNewsDao(db:NewsDatabase) = db.getNewsDao()
+
+    @Singleton
+    @Provides
+    fun providesBookmarkedNewsDao(db:NewsDatabase) = db.getBookmarkedNewsDao()
 }

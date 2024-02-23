@@ -20,14 +20,15 @@
             app:titleCentered="true"
             tools:title="News">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/search_button"
-                style="@style/Widget.Material3.Button.IconButton"
+            <ImageView
+                android:id="@+id/search_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                app:icon="@drawable/ic_search"
-                app:iconTint="?attr/colorOnPrimary" />
+                android:contentDescription="@string/content_desc_search_icon"
+                android:layout_marginEnd="@dimen/margin_16dp"
+                android:src="@drawable/ic_search"
+                app:tint="?attr/colorOnPrimary" />
 
         </com.google.android.material.appbar.MaterialToolbar>
 

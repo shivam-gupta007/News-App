@@ -4,6 +4,6 @@ import com.shivamgupta.newsapp.data.remote.pagination.NewsSearchPagingSource
 import dagger.assisted.AssistedFactory
 
 @AssistedFactory
-interface NewsSearchPagingSourceFactory {
+interface SearchNewsPagingSourceFactory {
     fun create(query: String): NewsSearchPagingSource
 }

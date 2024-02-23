@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.shivamgupta.newsapp.R
 import com.shivamgupta.newsapp.databinding.FragmentNewsDetailBinding
@@ -17,12 +19,15 @@ import com.shivamgupta.newsapp.util.ChromeCustomTabsUtil
 import com.shivamgupta.newsapp.util.Constants
 import com.shivamgupta.newsapp.util.getDrawableResById
 import com.shivamgupta.newsapp.util.toast
+import kotlinx.coroutines.launch
 
 
 class NewsDetailFragment : Fragment() {
     private lateinit var binding: FragmentNewsDetailBinding
     private val args: NewsDetailFragmentArgs by navArgs()
     private val bookmarkNewsViewModel by activityViewModels<BookmarkNewsViewModel>()
+    private val viewModel by activityViewModels<NewsDetailViewModel>()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -41,12 +46,24 @@ class NewsDetailFragment : Fragment() {
         setupViews()
     }
 
-    private fun setupViews() {
-        val newsDetails = args.newsItem
-        binding.newsDetailItem = newsDetails
-        setupViewArticleAction(newsDetails)
-        setupBookmarkNewsAction(newsDetails)
-        setupShareNewsAction(newsDetails)
+     private fun setupViews() {
+        viewModel.clearUiState()
+        if(args.navigateFromBookmarkedScreen){
+            viewModel.updateNewsDetailState(args.newsItem)
+        } else {
+            viewModel.mapBookmarkStatusOfNewsByTitle(args.newsItem)
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.uiState.flowWithLifecycle(lifecycle).collect { currentUiState ->
+                currentUiState.newsDetail?.let {
+                    binding.newsDetailItem = it
+                    setupViewArticleAction(newsDetails = it)
+                    setupBookmarkNewsAction(newsDetails = it)
+                    setupShareNewsAction(newsDetails = it)
+                }
+            }
+        }
     }
 
     private fun setupShareNewsAction(newsDetails: News) {
@@ -85,19 +102,17 @@ class NewsDetailFragment : Fragment() {
             R.string.news_bookmark_status,
             if (isBookmarked) "saved to Bookmarks" else "removed from Bookmarks"
         )
-
         toast(text = bookmarkStatus)
 
-        if(args.navigatedFromSearchNewsScreen){
-            bookmarkNewsViewModel.addNews(newsDetails)
+        if(isBookmarked){
+            bookmarkNewsViewModel.addNews(newsDetails.copy(isBookmarked = true))
         } else {
             newsDetails.id?.let { newsId ->
-                bookmarkNewsViewModel.toggleNewsBookmarkedStatus(
-                    newsId,
-                    isBookmarked
-                )
+                bookmarkNewsViewModel.deleteBookmarkedNews(newsId)
             }
         }
+
+        viewModel.updateBookmarkStatusState(isBookmarked)
     }
 
     private fun setupViewArticleAction(newsDetails: News) {

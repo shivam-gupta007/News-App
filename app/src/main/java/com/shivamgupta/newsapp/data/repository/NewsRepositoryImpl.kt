@@ -7,7 +7,7 @@ import com.shivamgupta.newsapp.data.local.dao.NewsDao
 import com.shivamgupta.newsapp.data.local.entities.NewsEntity
 import com.shivamgupta.newsapp.data.remote.pagination.NewsSearchPagingSource
 import com.shivamgupta.newsapp.data.remote.services.NewsApiService
-import com.shivamgupta.newsapp.di.NewsSearchPagingSourceFactory
+import com.shivamgupta.newsapp.di.SearchNewsPagingSourceFactory
 import com.shivamgupta.newsapp.domain.models.NewsArticle
 import com.shivamgupta.newsapp.domain.models.Resource
 import com.shivamgupta.newsapp.domain.models.asNewsEntity
@@ -28,7 +28,7 @@ class NewsRepositoryImpl @Inject constructor(
 ) : NewsRepository {
 
     @Inject
-    lateinit var newsSearchPagingSourceFactory: NewsSearchPagingSourceFactory
+    lateinit var searchNewsPagingSourceFactory: SearchNewsPagingSourceFactory
 
     override fun getTopHeadlines(
         fetchFromRemote: Boolean,
@@ -68,7 +68,7 @@ class NewsRepositoryImpl @Inject constructor(
     }
 
     override fun searchNews(query: String): Flow<PagingData<NewsArticle>> {
-        val searchNewsPagingSource = newsSearchPagingSourceFactory.create(query)
+        val searchNewsPagingSource = searchNewsPagingSourceFactory.create(query)
         val pager = Pager(
             config = PagingConfig(
                 pageSize = NewsSearchPagingSource.LOAD_SIZE,
@@ -80,21 +80,5 @@ class NewsRepositoryImpl @Inject constructor(
         )
 
         return pager.flow.flowOn(Dispatchers.IO)
-    }
-
-    override fun getBookmarkedNews(): Flow<List<NewsEntity>> {
-        return newsDao.fetchBookmarkedNews().flowOn(Dispatchers.IO)
-    }
-
-    override suspend fun addOrIgnoreNews(news: NewsEntity) {
-        withContext(Dispatchers.IO){
-            newsDao.insertOrIgnoreNews(news)
-        }
-    }
-
-    override suspend fun changeNewsBookmarkStatus(newsId: Long, isBookmarked: Boolean) {
-        withContext(Dispatchers.IO){
-            newsDao.updateNewsBookmarkStatus(newsId,isBookmarked)
-        }
     }
 }

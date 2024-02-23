@@ -25,15 +25,14 @@
             app:argType="com.shivamgupta.newsapp.domain.models.News" />
 
         <argument
-            android:name="navigatedFromSearchNewsScreen"
-            android:defaultValue="false"
+            android:name="navigateFromBookmarkedScreen"
             app:argType="boolean" />
 
     </fragment>
     <fragment
-        android:id="@+id/newsSearchFragment"
-        tools:layout="@layout/fragment_news_search"
-        android:name="com.shivamgupta.newsapp.presentation.search_news.NewsSearchFragment"
+        android:id="@+id/searchNewsFragment"
+        tools:layout="@layout/fragment_search_news"
+        android:name="com.shivamgupta.newsapp.presentation.search_news.SearchNewsFragment"
         android:label="Search news" >
 
         <action

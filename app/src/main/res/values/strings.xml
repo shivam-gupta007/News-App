@@ -16,6 +16,12 @@
     <string name="news_updated_message">News updated</string>
     <string name="no_matching_news_found_message">No matching news found for \'%1$s\'</string>
     <string name="empty_search_text_message">Please enter some keyword to search news</string>
+    <string name="sample_news_description">Apple is launching its first post-quantum protections, one of the biggest deployments of the future-resistant encryption technology to date.Billions of medical records, financial transactions, and … [+3273 chars]</string>
+    <string name="sample_news_title">Apple iOS 17.4: iMessage Gets Post-Quantum Encryption in New Update</string>
+    <string name="sample_news_source">The Times of India</string>
+    <string name="sample_published_at_date">20 July 2023</string>
+    <string name="sample_author_name">By Matt Burgess</string>
+    <string name="content_desc_search_icon">search icon</string>
 
 
 </resources>

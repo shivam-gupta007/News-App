@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -13,7 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.shivamgupta.newsapp.R
-import com.shivamgupta.newsapp.databinding.FragmentNewsSearchBinding
+import com.shivamgupta.newsapp.databinding.FragmentSearchNewsBinding
 import com.shivamgupta.newsapp.presentation.search_news.adapter.PagerLoaderAdapter
 import com.shivamgupta.newsapp.presentation.search_news.adapter.SearchedNewsPagingAdapter
 import com.shivamgupta.newsapp.util.ExceptionUtils
@@ -28,17 +29,18 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class NewsSearchFragment : Fragment() {
+class SearchNewsFragment : Fragment() {
 
-    private lateinit var binding: FragmentNewsSearchBinding
+    private lateinit var binding: FragmentSearchNewsBinding
     private val viewModel by activityViewModels<SearchNewsViewModel>()
     private lateinit var searchedNewsPagingAdapter: SearchedNewsPagingAdapter
+    private lateinit var callback: OnBackPressedCallback
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_news_search, container, false
+            inflater, R.layout.fragment_search_news, container, false
         )
 
         return binding.root
@@ -49,11 +51,10 @@ class NewsSearchFragment : Fragment() {
     }
 
     private fun setupViews() {
-        viewModel.clearUiState()
-
         setupNewsSearchBox()
         setupNewsRecyclerView()
         observeLoadingState()
+        handleOnBackPressed()
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.uiState.flowWithLifecycle(
@@ -69,14 +70,25 @@ class NewsSearchFragment : Fragment() {
         }
     }
 
+    private fun handleOnBackPressed() {
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                viewModel.clearUiState()
+                findNavController().popBackStack()
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+    }
+
 
     private fun setupNewsRecyclerView() {
         searchedNewsPagingAdapter = SearchedNewsPagingAdapter(
             onNewsClicked = { clickedNews ->
                 findNavController().navigate(
-                    NewsSearchFragmentDirections.openNewsDetailScreenFromSearchNewsScreen(
+                    SearchNewsFragmentDirections.openNewsDetailScreenFromSearchNewsScreen(
                         newsItem = clickedNews,
-                        navigatedFromSearchNewsScreen = true
+                        navigateFromBookmarkedScreen = false
                     )
                 )
             }
@@ -148,7 +160,7 @@ class NewsSearchFragment : Fragment() {
             }
 
             setEndIconOnClickListener {
-                viewModel.updateSearchTextState(text = null)
+                viewModel.clearUiState()
             }
         }
     }
@@ -157,12 +169,17 @@ class NewsSearchFragment : Fragment() {
         val searchQuery = binding.searchNewsInputLayout.editTextValue
         if (searchQuery.isNotEmpty()) {
             viewModel.updateHeaderTitleTextState(text = null)
-            viewModel.searchNews()
+            viewModel.findNewsByQuery()
             binding.searchNewsInputLayout.editText?.hideKeyboard()
         } else {
             toast(text = getString(R.string.empty_search_text_message))
         }
     }
 
-
+    override fun onDestroy() {
+        super.onDestroy()
+        if (this::callback.isInitialized) {
+            callback.remove()
+        }
+    }
 }

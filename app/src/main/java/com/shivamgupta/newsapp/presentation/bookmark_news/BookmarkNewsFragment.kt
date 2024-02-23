@@ -13,9 +13,9 @@ import androidx.navigation.fragment.findNavController
 import com.shivamgupta.newsapp.R
 import com.shivamgupta.newsapp.databinding.FragmentBookmarkNewsBinding
 import com.shivamgupta.newsapp.domain.models.News
-import com.shivamgupta.newsapp.presentation.news_feed.NewsFeedFragmentDirections
 import com.shivamgupta.newsapp.presentation.news_feed.adapter.NewsRecyclerViewAdapter
 import com.shivamgupta.newsapp.util.showSnackBar
+import com.shivamgupta.newsapp.util.toast
 import kotlinx.coroutines.launch
 
 
@@ -41,7 +41,18 @@ class BookmarkNewsFragment : Fragment() {
         setupViews()
     }
 
+    private fun setupSwipeToRefresh() {
+        binding.swipeToRefreshLayout.apply {
+            setOnRefreshListener {
+                toast(text = context.getString(R.string.news_updated_message))
+                viewModel.getBookmarkedNews()
+            }
+        }
+    }
+
     private fun setupViews() {
+        setupSwipeToRefresh()
+
         viewModel.getBookmarkedNews()
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -71,7 +82,10 @@ class BookmarkNewsFragment : Fragment() {
             news = news,
             onNewsClicked = { clickedNews ->
                 findNavController().navigate(
-                    BookmarkNewsFragmentDirections.openNewsDetailScreenFromBookmarkNewsScreen(clickedNews)
+                    BookmarkNewsFragmentDirections.openNewsDetailScreenFromBookmarkNewsScreen(
+                        newsItem = clickedNews,
+                        navigateFromBookmarkedScreen = true
+                    )
                 )
             }
         )

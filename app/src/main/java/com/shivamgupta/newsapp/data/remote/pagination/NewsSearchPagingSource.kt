@@ -24,7 +24,7 @@ class NewsSearchPagingSource @AssistedInject constructor(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, NewsArticle> {
         val position = params.key ?: STARTING_KEY
-        val result = apiService.fetchNewsWithQuery(
+        val result = apiService.searchNewsByQuery(
             searchQuery = query,
             pageNo = position,
             pageSize = LOAD_SIZE

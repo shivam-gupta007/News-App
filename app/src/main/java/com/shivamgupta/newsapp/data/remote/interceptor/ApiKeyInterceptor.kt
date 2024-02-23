@@ -11,7 +11,8 @@ class ApiKeyInterceptor: Interceptor {
         val requestBuilder: Request.Builder = originalRequest.newBuilder()
             .addHeader("X-Api-Key", Constants.API_KEY)
 
-        //TODO("API_KEY should be retrieved from the local preferences. Here I've just added the API_KEY in the Constants file")
+        //TODO("API_KEY should be retrieved from the local preferences.
+        // Here I've just added the API_KEY in the Constants file")
 
         val modifiedRequest = requestBuilder.build()
         return chain.proceed(modifiedRequest)
